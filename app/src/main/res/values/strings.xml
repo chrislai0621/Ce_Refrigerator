@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">CE_Refrigerator</string>
+    <string name="Category">食材類別：</string>
+    <string name="ItemName">食材名稱：</string>
+    <string name="productionDate">採購日期：</string>
+    <string name="ExpirationDate">到期日期：</string>
+    <string name="Amount">採購金額：</string>
+    <string name="Compartment">儲存位置：</string>
+    <string name="Note">備　　註：</string>
+    <string name="Freezer">冷凍室</string>
+    <string name="fridge">冷藏室</string>
+</resources>
