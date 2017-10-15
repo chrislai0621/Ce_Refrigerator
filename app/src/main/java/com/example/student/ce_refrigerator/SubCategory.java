@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public class SubCategory extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     ArrayList<String> forAdapter = new ArrayList<String>();
     ListView listview;
+    Button btnAction;
     FoodCategoryFragment SubCategorydialog;
     static String  mStatus ="Add";
     static int selectedIndex =0;
@@ -46,6 +48,15 @@ TextView tvCategory;
         Intent it =getIntent();
         categoryId=it.getLongExtra("CATEGORY_ID",0);
         categoryName =it.getStringExtra("CATEGORY_NAME");
+        btnAction = (Button)findViewById(R.id.btnAction);
+        btnAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mStatus ="Add";
+                SubCategorydialog.show(getSupportFragmentManager(), "FoodCategoryFragment");
+
+            }
+        });
         getData();
         initListView();
         tvCategory  =(TextView)findViewById(R.id.tvCategory);
@@ -134,16 +145,16 @@ TextView tvCategory;
     //region 新增、蝙輯、刪除事件
 
 
-    /**
-     * 按下新增按扭，顯示新增的對話框
-     *
-     * @param v
-     */
-    public void clickFoodFragment(View v) {
-        mStatus ="Add";
-        SubCategorydialog.show(getSupportFragmentManager(), "FoodCategoryFragment");
-
-    }
+//    /**
+//     * 按下新增按扭，顯示新增的對話框
+//     *
+//     * @param v
+//     */
+//    public void clickFoodFragment(View v) {
+//        mStatus ="Add";
+//        SubCategorydialog.show(getSupportFragmentManager(), "FoodCategoryFragment");
+//
+//    }
     /**
      * 按下新增按扭對話窗後的ok按扭事件
      *

@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.student.ce_refrigerator.Dao.CategoryDao;
@@ -23,6 +24,7 @@ public class Category extends AppCompatActivity {
     ArrayAdapter<String> adapter;
     List<String> forAdapter = new ArrayList<String>();
     ListView listview;
+    Button btnAction;
     CategoryFragment Categorydialog;
     static String  mStatus ="Add";
     static int selectedIndex =0;
@@ -41,6 +43,14 @@ public class Category extends AppCompatActivity {
         categoryDao = new CategoryDao(getApplicationContext());
         foodDao = new FoodDao(getApplicationContext());
         foodListDao = new FoodListDao(getApplicationContext());
+        btnAction = (Button)findViewById(R.id.btnAction);
+        btnAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mStatus ="Add";
+                Categorydialog.show(getSupportFragmentManager(), "CategoryFragment");
+            }
+        });
         getData();
 
         initListView();
@@ -140,16 +150,6 @@ public void BackPage(View v)
     //region 新增、蝙輯、刪除事件
 
 
-    /**
-     * 按下新增按扭，顯示新增的對話框
-     *
-     * @param v
-     */
-    public void clickCategoryFragment(View v) {
-        mStatus ="Add";
-        Categorydialog.show(getSupportFragmentManager(), "CategoryFragment");
-
-    }
     /**
      * 按下新增按扭對話窗後的ok按扭事件
      *
