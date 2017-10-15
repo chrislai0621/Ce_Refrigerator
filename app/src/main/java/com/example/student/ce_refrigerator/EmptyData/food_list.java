@@ -7,10 +7,10 @@ import java.util.Date;
  */
 
 public class food_list {
-    private int id;//(主鍵)
+    private long id;//(主鍵)
     private String img_id;//(照片id)
-    private int category_id;//(食材類別 FK category.id)
-    private int food_id;//(食物名稱 FK food.id)
+    private long category_id;//(食材類別 FK category.id)
+    private long food_id;//(食物名稱 FK food.id)
     private Date purchase_date;//(採購日期)
     private Date expired_date;//(到期日期)
     private int purchase_date2;//(轉換過採購日期)
@@ -19,7 +19,7 @@ public class food_list {
     private int storage;//(存放位置)0冷藏1冷凍
     private String remark;//(備註)
 
-    public food_list(int id, String img_id, int category_id, int food_id, Date purchase_date, Date expired_date, double purchase_amount, int storage, String remark) {
+    public food_list(long id,  long category_id, long food_id,String img_id, Date purchase_date, Date expired_date, double purchase_amount, int storage, String remark) {
 
         this.id = id;
         this.img_id = img_id;
@@ -33,12 +33,25 @@ public class food_list {
         this.purchase_date2 = Integer.parseInt(purchase_date.toString().replace("/", "").replace(":", "").replace(" ", ""));
         this.expired_date2 = Integer.parseInt(expired_date.toString().replace("/", "").replace(":", "").replace(" ", ""));
     }
+    public food_list(long aLong, long category_id, long food_id, String img_id, Date purchase_date, Date expired_date, int cursorInt, int anInt, double purchase_amount, int storage, String remark) {
 
-    public int getId() {
+
+        this.img_id = img_id;
+        this.category_id = category_id;
+        this.food_id = food_id;
+        this.purchase_date = purchase_date;
+        this.expired_date = expired_date;
+        this.purchase_amount = purchase_amount;
+        this.storage = storage;
+        this.remark = remark;
+        this.purchase_date2 = Integer.parseInt(purchase_date.toString().replace("/", "").replace(":", "").replace(" ", ""));
+        this.expired_date2 = Integer.parseInt(expired_date.toString().replace("/", "").replace(":", "").replace(" ", ""));
+    }
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -50,19 +63,19 @@ public class food_list {
         this.img_id = img_id;
     }
 
-    public int getCategory_id() {
+    public long getCategory_id() {
         return category_id;
     }
 
-    public void setCategory_id(int category_id) {
+    public void setCategory_id(long category_id) {
         this.category_id = category_id;
     }
 
-    public int getFood_id() {
+    public long getFood_id() {
         return food_id;
     }
 
-    public void setFood_id(int food_id) {
+    public void setFood_id(long food_id) {
         this.food_id = food_id;
     }
 

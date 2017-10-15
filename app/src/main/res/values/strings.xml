@@ -9,4 +9,7 @@
     <string name="Note">備　　註：</string>
     <string name="Freezer">冷凍室</string>
     <string name="fridge">冷藏室</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

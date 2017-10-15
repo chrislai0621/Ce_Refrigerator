@@ -7,19 +7,22 @@ import java.io.Serializable;
  */
 
 public class category implements Serializable{
-    private  int id; //主鍵
+    private  long id; //主鍵
     private String name;//大類名稱
 
-    public category(int id, String name) {
+    public category(long id, String name) {
         this.id = id;
         this.name = name;
     }
-
-    public int getId() {
+    public category( String name) {
+        this.id = id;
+        this.name = name;
+    }
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
