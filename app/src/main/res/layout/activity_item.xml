@@ -53,11 +53,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <TextView android:id="@+id/tvPurchaseDate"
             style="@style/ItemDetails_TextView"
-            android:text="@string/productionDate" />
+            android:text="@string/productionDate"
+            />
 
-        <EditText style="@style/ItemDetails_EditViewDate" />
+        <EditText android:id="@+id/etPurchaseDate"
+            style="@style/ItemDetails_EditViewDate"
+android:focusable="false"/>
 
     </LinearLayout>
 
@@ -66,11 +69,14 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <TextView android:id="@+id/tvExpiredDate"
             style="@style/ItemDetails_TextView"
-            android:text="@string/ExpirationDate" />
+            android:text="@string/ExpirationDate"
+           />
 
-        <EditText style="@style/ItemDetails_EditViewDate" />
+        <EditText android:id="@+id/etExpiredDate"
+            style="@style/ItemDetails_EditViewDate"
+            android:focusable="false" />
 
     </LinearLayout>
 
