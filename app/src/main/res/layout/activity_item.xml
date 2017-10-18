@@ -28,9 +28,12 @@
 
         <TextView
             style="@style/ItemDetails_TextView"
-            android:text="@string/Category" />
+            android:text="@string/Category"
+            />
 
-        <EditText style="@style/ItemDetails_EditView" />
+        <Spinner
+            android:id="@+id/spCategory"
+            style="@style/ItemDetails_Spinner"  />
 
     </LinearLayout>
 
@@ -44,8 +47,9 @@
             android:text="@string/ItemName" />
 
 
-        <EditText style="@style/ItemDetails_EditView" />
-
+        <Spinner
+            android:id="@+id/spFood"
+            style="@style/ItemDetails_Spinner"/>
     </LinearLayout>
 
     <LinearLayout
