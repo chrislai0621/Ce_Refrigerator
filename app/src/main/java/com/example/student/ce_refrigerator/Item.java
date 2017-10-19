@@ -1,6 +1,5 @@
 package com.example.student.ce_refrigerator;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.format.DateFormat;
@@ -105,9 +104,7 @@ public class Item extends AppCompatActivity {
     }
 
     public void BackPage(View v) {
-        Intent it = new Intent(Item.this, MainActivity.class);
-        startActivity(it);
-
+        finish();
     }
 
 

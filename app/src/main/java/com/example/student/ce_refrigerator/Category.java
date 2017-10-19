@@ -62,9 +62,7 @@ public class Category extends AppCompatActivity {
 
 public void BackPage(View v)
 {
-    Intent it  = new Intent(Category.this,MainActivity.class);
-    startActivity(it);
-
+  finish();
 }
 
     /**
