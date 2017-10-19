@@ -30,7 +30,8 @@
             android:layout_weight="1"
             android:background="#00ffffff"
             app:srcCompat="@drawable/food_1"
-            android:onClick="goFood"/>
+            android:onClick="goFood"
+            android:scaleType="fitCenter"/>
 
         <ImageButton
             android:id="@+id/imageButton2"
@@ -39,7 +40,8 @@
             android:layout_weight="1"
             android:background="#00ffffff"
             app:srcCompat="@drawable/category_1"
-            android:onClick="goCategory"/>
+            android:onClick="goCategory"
+            android:scaleType="fitCenter"/>
     </LinearLayout>
 
     <LinearLayout
@@ -55,7 +57,8 @@
         android:layout_weight="1"
         android:background="#00ffffff"
         app:srcCompat="@drawable/refrigerator_1"
-        android:onClick="goRefrigerator"/>
+        android:onClick="goRefrigerator"
+        android:scaleType="fitCenter"/>
 
     <ImageButton
         android:id="@+id/imageButton4"
@@ -64,7 +67,8 @@
         android:layout_weight="1"
         android:background="#00ffffff"
         app:srcCompat="@drawable/shoppinglist_1"
-        android:onClick="goShoppingList"/>
+        android:onClick="goShoppingList"
+        android:scaleType="fitCenter"/>
 
     </LinearLayout>
 
