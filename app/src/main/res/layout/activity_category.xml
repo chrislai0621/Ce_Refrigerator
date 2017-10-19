@@ -10,6 +10,10 @@
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         layout="@layout/header"></include>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="食材類別"/>
     <ListView android:id="@+id/lvCategory"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

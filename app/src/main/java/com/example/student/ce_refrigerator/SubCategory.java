@@ -62,7 +62,7 @@ TextView tvCategory;
         tvCategory  =(TextView)findViewById(R.id.tvCategory);
         SubCategorydialog = new FoodCategoryFragment();
         registerForContextMenu(listview);//設定listview有menu
-        tvCategory.setText("食品大類："+ categoryName);
+        tvCategory.setText("食材類別："+ categoryName);
 
     }
 
