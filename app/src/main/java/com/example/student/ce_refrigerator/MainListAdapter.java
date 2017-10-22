@@ -3,28 +3,26 @@ package com.example.student.ce_refrigerator;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
-import com.example.student.ce_refrigerator.EmptyData.shopping_list;
+import com.example.student.ce_refrigerator.EmptyData.food_list;
 
 /**
  * Created by student on 2017/10/2.
  */
 
-public class ShoppingListAdapter extends BaseAdapter {
+public class MainListAdapter extends BaseAdapter {
 
-    private Shopping_cart_list shopping_cart_list;
+    private MainActivity mainActivity;
 
-    public ShoppingListAdapter(Shopping_cart_list shopping_cart_list) {
-        this.shopping_cart_list = shopping_cart_list;
+    public MainListAdapter(MainActivity mainActivity) {
+        this.mainActivity = mainActivity;
     }
 
     @Override
     public int getCount() {
         
-        return shopping_cart_list.getShoppingList().size();//改成4就有;list view就有4項資料
+        return mainActivity.getfood_list().size();//改成4就有;list view就有4項資料
     }
 
     @Override
@@ -39,31 +37,24 @@ public class ShoppingListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        View v=shopping_cart_list.getLayoutInflater().inflate(R.layout.listview_shopping_list,null);
+
+        View v=mainActivity.getLayoutInflater().inflate(R.layout.listview_main,null);
         TextView tvItemid  = (TextView)v.findViewById(R.id.itemid);
-        TextView tvFoodName2  = (TextView)v.findViewById(R.id.tvFoodName2);
-        TextView tvPurchaseAmt2  = (TextView)v.findViewById(R.id.tvPurchaseAmt2);
-        CheckBox cbShopping =(CheckBox)v.findViewById(R.id.cbShopping);
-       final shopping_list sl =shopping_cart_list.getShoppingList().get(i);
+        TextView tvFoodName3  = (TextView)v.findViewById(R.id.tvFoodName3);
+        TextView tvPurchasedDate3  = (TextView)v.findViewById(R.id.tvPurchasedDate3);
+        TextView tvExpiredDate3  = (TextView)v.findViewById(R.id.tvExpiredDate3);
+        TextView tvStoragy  = (TextView)v.findViewById(R.id.tvStoragy);
 
-        tvItemid.setText(String.valueOf(sl.getId()));
-        tvFoodName2.setText(sl.getFood_name());
-        tvPurchaseAmt2.setText(String.valueOf(sl.getPurchase_amount()));
-        cbShopping.setChecked(sl.is_check());
-        cbShopping.setOnCheckedChangeListener(new  CompoundButton.OnCheckedChangeListener() {
+       final food_list f =mainActivity.getfood_list().get(i);
 
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+        tvItemid.setText(String.valueOf(f.getId()));
+        tvFoodName3.setText(mainActivity.getFoodName(f.getFood_id()));
+        tvPurchasedDate3.setText(f.getPurchase_date());
+        tvExpiredDate3.setText(f.getExpired_date());
+        if(f.getStorage()==0) tvStoragy.setText("冷藏");
+        else tvStoragy.setText("冷凍");
 
-                if (isChecked) {
-                    sl.setIs_check(true);
-                }else{
-                    sl.setIs_check(false);
-                }
-                shopping_cart_list.updateShoppingList(sl);
 
-            }
-        });
         return v;
     }
 

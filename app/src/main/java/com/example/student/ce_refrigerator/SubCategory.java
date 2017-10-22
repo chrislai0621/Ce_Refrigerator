@@ -1,8 +1,10 @@
 
 package com.example.student.ce_refrigerator;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -22,13 +24,13 @@ import java.util.List;
 
 public class SubCategory extends AppCompatActivity {
     long categoryId;
-    String categoryName;
-    List<food> listSubCategory = new ArrayList<>();
-    ArrayAdapter<String> adapter;
-    ArrayList<String> forAdapter = new ArrayList<String>();
-    ListView listview;
-    Button btnAction;
-    FoodCategoryFragment SubCategorydialog;
+    private String categoryName;
+    private List<food> listSubCategory = new ArrayList<>();
+    private  ArrayAdapter<String> adapter;
+    private  ArrayList<String> forAdapter = new ArrayList<String>();
+    private  ListView listview;
+    private  Button btnAction;
+    private    FoodCategoryFragment SubCategorydialog;
     static String  mStatus ="Add";
     static int selectedIndex =0;
 TextView tvCategory;
@@ -62,7 +64,7 @@ TextView tvCategory;
         tvCategory  =(TextView)findViewById(R.id.tvCategory);
         SubCategorydialog = new FoodCategoryFragment();
         registerForContextMenu(listview);//設定listview有menu
-        tvCategory.setText("食材類別："+ categoryName);
+        tvCategory.setText("食品類別："+ categoryName);
 
     }
 
@@ -127,13 +129,29 @@ TextView tvCategory;
 
                 break;
             case 2://刪涂
-                food food1 = listSubCategory.get(selectedIndex);
-                foodDao.delete(food1.getId());
-                foodListDao.deleteSubCategory(food1.getId());
-                getData();
 
-                adapter = (ArrayAdapter<String>) listview.getAdapter();
-                adapter.notifyDataSetChanged();
+                AlertDialog.Builder builder = new AlertDialog.Builder(SubCategory.this);
+                builder.setTitle("確認刪除");
+                builder.setMessage("請確認是否刪除本筆資料?");
+                builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        food food1 = listSubCategory.get(selectedIndex);
+                        foodDao.delete(food1.getId());
+                        foodListDao.deleteSubCategory(food1.getId());
+                        getData();
+
+                        adapter = (ArrayAdapter<String>) listview.getAdapter();
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
                 break;
         }
         return super.onContextItemSelected(item);

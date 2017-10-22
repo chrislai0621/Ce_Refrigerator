@@ -1,9 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.student.ce_refrigerator.item2">
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:weightSum="1"
+    >
+    <include
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        layout="@layout/header"></include>
 
-</android.support.constraint.ConstraintLayout>
+    <ImageView android:id="@+id/ImageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/camera"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ItemDetails_TextView"
+            android:text="@string/Category"
+            />
+
+        <TextView
+            android:id="@+id/tvCategory1"
+            style="@style/ItemDetails_TextView"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ItemDetails_TextView"
+            android:text="@string/ItemName" />
+
+
+        <TextView
+            android:id="@+id/tvFood1"
+            style="@style/ItemDetails_TextView"  />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView android:id="@+id/tvPurchaseDate"
+            style="@style/ItemDetails_TextView"
+            android:text="@string/productionDate"
+            />
+
+        <TextView
+            android:id="@+id/tvPurchaseDate1"
+            style="@style/ItemDetails_TextView"  />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView android:id="@+id/tvExpiredDate"
+            style="@style/ItemDetails_TextView"
+            android:text="@string/ExpirationDate"
+            />
+
+        <TextView
+            android:id="@+id/tvExpiredDate1"
+            style="@style/ItemDetails_TextView"  />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ItemDetails_TextView"
+            android:text="@string/Amount" />
+
+
+        <TextView
+            android:id="@+id/tvPurchaseAmt"
+            style="@style/ItemDetails_TextView"  />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ItemDetails_TextView"
+            android:text="@string/Compartment" />
+        <TextView
+            android:id="@+id/tvRb"
+            style="@style/ItemDetails_TextView"  />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ItemDetails_TextView"
+            android:text="@string/Note" />
+
+        <TextView
+            android:id="@+id/tvRemark"
+            style="@style/ItemDetails_TextView"  />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+      <Button
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:onClick="onclick_delete"
+          android:text="刪除"
+          />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="onclick_shopping_list"
+            android:text="轉至採購清單"
+            />
+    </LinearLayout>
+</LinearLayout>

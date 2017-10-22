@@ -13,11 +13,11 @@ import com.example.student.ce_refrigerator.EmptyData.shopping_list;
  * Created by student on 2017/10/2.
  */
 
-public class MyListAdapter extends BaseAdapter {
+public class ShoppingListAdapter extends BaseAdapter {
 
     private Shopping_cart_list shopping_cart_list;
 
-    public MyListAdapter(Shopping_cart_list shopping_cart_list) {
+    public ShoppingListAdapter(Shopping_cart_list shopping_cart_list) {
         this.shopping_cart_list = shopping_cart_list;
     }
 

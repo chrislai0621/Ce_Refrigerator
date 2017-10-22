@@ -14,12 +14,12 @@
         android:layout_width="wrap_content"
         layout="@layout/header"></include>
 
-    <ImageButton
+    <ImageView android:id="@+id/ImageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:src="@drawable/camera"
-        android:background="#ffffff"/>
+          android:onClick="onclick_camera"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -62,23 +62,9 @@
             android:text="@string/productionDate"
             />
 
-<<<<<<< .mine
-        <EditText
-            android:id="@+id/editText2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="date" />
-=======
         <EditText android:id="@+id/etPurchaseDate"
             style="@style/ItemDetails_EditViewDate"
 android:focusable="false"/>
-
-
-
-
->>>>>>> .theirs
 
     </LinearLayout>
 
@@ -92,23 +78,9 @@ android:focusable="false"/>
             android:text="@string/ExpirationDate"
            />
 
-<<<<<<< .mine
-        <EditText
-            android:id="@+id/editText3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ems="10"
-            android:inputType="date" />
-=======
         <EditText android:id="@+id/etExpiredDate"
             style="@style/ItemDetails_EditViewDate"
             android:focusable="false" />
-
-
-
-
->>>>>>> .theirs
 
     </LinearLayout>
 
@@ -121,7 +93,7 @@ android:focusable="false"/>
             style="@style/ItemDetails_TextView"
             android:text="@string/Amount" />
 
-        <EditText
+        <EditText  android:id="@+id/etPurchaseAmt"
             style="@style/ItemDetails_EditViewAmount"
             android:inputType="numberDecimal" />
 
@@ -141,14 +113,18 @@ android:focusable="false"/>
             android:layout_weight="4"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-
-            <RadioButton
+            <RadioButton android:id="@+id/rb1"
                 style="@style/ItemDetails_RadioButton"
-                android:text="@string/Freezer" />
-
-            <RadioButton
+                android:text="@string/fridge"
+                android:checked="true"
+                android:tag="0"
+               />
+            <RadioButton  android:id="@+id/rb2"
                 style="@style/ItemDetails_RadioButton"
-                android:text="@string/fridge" />
+                android:text="@string/Freezer"
+                android:tag="1"/>
+
+
         </RadioGroup>
 
     </LinearLayout>
@@ -161,7 +137,8 @@ android:focusable="false"/>
             style="@style/ItemDetails_TextView"
             android:text="@string/Note" />
 
-        <EditText style="@style/ItemDetails_EditView" />
+        <EditText android:id="@+id/etRemark"
+            style="@style/ItemDetails_EditView" />
 
     </LinearLayout>
 </LinearLayout>

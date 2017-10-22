@@ -1,7 +1,9 @@
 package com.example.student.ce_refrigerator;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ContextMenu;
 import android.view.MenuItem;
@@ -20,18 +22,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Category extends AppCompatActivity {
-    List<category> listCategory = new ArrayList<>();
-    ArrayAdapter<String> adapter;
-    List<String> forAdapter = new ArrayList<String>();
-    ListView listview;
-    Button btnAction;
-    CategoryFragment Categorydialog;
-    static String  mStatus ="Add";
-    static int selectedIndex =0;
-// 建立資料庫物件
-    CategoryDao categoryDao;
-    FoodDao foodDao;
-    FoodListDao foodListDao;
+    private List<category> listCategory = new ArrayList<>();
+    private ArrayAdapter<String> adapter;
+    private List<String> forAdapter = new ArrayList<String>();
+    private ListView listview;
+    private Button btnAction;
+    private CategoryFragment Categorydialog;
+    static String mStatus = "Add";
+    static int selectedIndex = 0;
+    // 建立資料庫物件
+    private CategoryDao categoryDao;
+    private FoodDao foodDao;
+    private FoodListDao foodListDao;
+
     public List<category> getListCategory() {
         return listCategory;
     }
@@ -43,11 +46,11 @@ public class Category extends AppCompatActivity {
         categoryDao = new CategoryDao(getApplicationContext());
         foodDao = new FoodDao(getApplicationContext());
         foodListDao = new FoodListDao(getApplicationContext());
-        btnAction = (Button)findViewById(R.id.btnAction);
+        btnAction = (Button) findViewById(R.id.btnAction);
         btnAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mStatus ="Add";
+                mStatus = "Add";
                 Categorydialog.show(getSupportFragmentManager(), "CategoryFragment");
             }
         });
@@ -59,20 +62,17 @@ public class Category extends AppCompatActivity {
     }
 
 
-
-public void BackPage(View v)
-{
-  finish();
-}
+    public void BackPage(View v) {
+        finish();
+    }
 
     /**
      * 取得食材大類資料
      */
     public void getData() {
-        listCategory =categoryDao.getAll();
+        listCategory = categoryDao.getAll();
         forAdapter.clear();
-        for(category o:listCategory)
-        {
+        for (category o : listCategory) {
             forAdapter.add(o.getName());
         }
     }
@@ -90,7 +90,7 @@ public void BackPage(View v)
                 it.putExtra("CATEGORY_ID", listCategory.get(i).getId());
                 it.putExtra("CATEGORY_NAME", listCategory.get(i).getName());
                 startActivity(it);
-                selectedIndex =i;
+                selectedIndex = i;
             }
         });
 
@@ -122,22 +122,38 @@ public void BackPage(View v)
 
         //取得listview選取資訊
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-        selectedIndex=  info.position;
+        selectedIndex = info.position;
         switch (item.getItemId()) {
             case 1://修改
-                mStatus ="Edit";
+                mStatus = "Edit";
                 Categorydialog.show(getSupportFragmentManager(), "CategoryFragment");
 
                 break;
             case 2://刪涂
-                category category1 = listCategory.get(selectedIndex);
-                foodListDao.deleteCategory(category1.getId());//刪掉食物清單
-                foodDao.deleteCategory(category1.getId());//刪掉食物名稱清單
-                categoryDao.delete(category1.getId());//刪掉食品大類清單
+                AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
+                builder.setTitle("確認刪除");
+                builder.setMessage("請確認是否刪除本筆資料?");
+                builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        category category1 = listCategory.get(selectedIndex);
+                        foodListDao.deleteCategory(category1.getId());//刪掉食物清單
+                        foodDao.deleteCategory(category1.getId());//刪掉食物名稱清單
+                        categoryDao.delete(category1.getId());//刪掉食品大類清單
 
-                getData();
-                adapter = (ArrayAdapter<String>) listview.getAdapter();
-                adapter.notifyDataSetChanged();
+                        getData();
+                        adapter = (ArrayAdapter<String>) listview.getAdapter();
+                        adapter.notifyDataSetChanged();
+                    }
+                });
+                builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
+
 
                 //還需要刪除子目錄的資料，與曾經建過的foodlist
                 break;
@@ -162,16 +178,17 @@ public void BackPage(View v)
         adapter.notifyDataSetChanged();
 
     }
+
     /**
      * 按下修改按扭對話窗的ok按扭事件
      *
      * @param Name
      */
-    public void setEditMessage(CharSequence Name ) {
+    public void setEditMessage(CharSequence Name) {
 
         category category1 = listCategory.get(selectedIndex);
         category1.setName(Name.toString());
-        forAdapter.set(selectedIndex,Name.toString());
+        forAdapter.set(selectedIndex, Name.toString());
         adapter = (ArrayAdapter<String>) listview.getAdapter();
         adapter.notifyDataSetChanged();
         categoryDao.update(category1);

@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.example.student.ce_refrigerator.EmptyData.food_list;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -42,8 +41,8 @@ public class FoodListDao {
                     CATEGORY_ID_COLUMN + " INTEGER  NOT NULL ,"+
                     FOOD_ID_COLUMN + " INTEGER  NOT NULL ,"+
                     IMG_ID_COLUMN + " TEXT  NULL ,"+
-                    PURCHASE_DATE_COLUMN + " DATE  NOT  NULL ,"+
-                    EXPIRED_DATE_COLUMN + " DATE  NOT  NULL ,"+
+                    PURCHASE_DATE_COLUMN + " TEXT  NOT  NULL ,"+
+                    EXPIRED_DATE_COLUMN + " TEXT  NOT  NULL ,"+
                     PURCHASE_DATE2_COLUMN + " INTEGER  NOT  NULL ,"+
                     EXPIRED_DATE2_COLUMN + " INTEGER  NOT  NULL ,"+
                     PURCHASE_AMOUNT_COLUMN + " REAL  NOT  NULL ,"+
@@ -76,8 +75,8 @@ public class FoodListDao {
         cv.put(CATEGORY_ID_COLUMN, item.getCategory_id());
         cv.put(FOOD_ID_COLUMN,item.getFood_id());
         cv.put(IMG_ID_COLUMN,item.getImg_id());
-        cv.put(PURCHASE_DATE_COLUMN,item.getPurchase_date().getDate());
-        cv.put(EXPIRED_DATE_COLUMN,item.getExpired_date().getDate());
+        cv.put(PURCHASE_DATE_COLUMN,item.getPurchase_date());
+        cv.put(EXPIRED_DATE_COLUMN,item.getExpired_date());
         cv.put(PURCHASE_DATE2_COLUMN,item.getExpired_date2());
         cv.put(EXPIRED_DATE2_COLUMN,item.getExpired_date2());
         cv.put(PURCHASE_AMOUNT_COLUMN,item.getPurchase_amount());
@@ -108,8 +107,8 @@ public class FoodListDao {
         cv.put(CATEGORY_ID_COLUMN, item.getCategory_id());
         cv.put(FOOD_ID_COLUMN,item.getFood_id());
         cv.put(IMG_ID_COLUMN,item.getImg_id());
-        cv.put(PURCHASE_DATE_COLUMN,item.getPurchase_date().getDate());
-        cv.put(EXPIRED_DATE_COLUMN,item.getExpired_date().getDate());
+        cv.put(PURCHASE_DATE_COLUMN,item.getPurchase_date());
+        cv.put(EXPIRED_DATE_COLUMN,item.getExpired_date());
         cv.put(PURCHASE_DATE2_COLUMN,item.getExpired_date2());
         cv.put(EXPIRED_DATE2_COLUMN,item.getExpired_date2());
         cv.put(PURCHASE_AMOUNT_COLUMN,item.getPurchase_amount());
@@ -157,7 +156,37 @@ public class FoodListDao {
         cursor.close();
         return result;
     }
+    // 讀取所有記事資料
+    public List<food_list> getAllOrderbyExpiredDate() {
+        List<food_list> result = new ArrayList<>();
+        Cursor cursor = db.query(
+                TABLE_NAME, null, null, null, null, null, EXPIRED_DATE2_COLUMN , null);
 
+        while (cursor.moveToNext()) {
+
+
+            result.add(getRecord(cursor));
+        }
+
+        cursor.close();
+        return result;
+    }
+    // 取得指定編號的資料物件
+    public List<food_list> getCategory(long category_id,int storage) {
+        List<food_list> result = new ArrayList<>();
+        String where = CATEGORY_ID_COLUMN + "=? AND "+ STORAGE_COLUMN +"=?";
+        Cursor cursor = db.query(
+                TABLE_NAME, null, where, new String[]{String.valueOf(category_id),String.valueOf(storage)}, null, null, null, null);
+
+        while (cursor.moveToNext()) {
+
+
+            result.add(getRecord(cursor));
+        }
+
+        cursor.close();
+        return result;
+    }
     // 取得指定編號的資料物件
     public food_list get(long id) {
         // 準備回傳結果用的物件
@@ -183,11 +212,9 @@ public class FoodListDao {
     // 把Cursor目前的資料包裝為物件
     public food_list getRecord(Cursor cursor) {
         // 準備回傳結果用的物件
-        Date phurseDate =new Date(cursor.getString(4));
-        Date expireDate =new Date(cursor.getString(5));
+
         food_list result = new food_list(cursor.getLong(0),cursor.getLong(1),cursor.getLong(2),
-                cursor.getString(3),   phurseDate,expireDate,cursor.getInt(6) ,
-                cursor.getInt(7),cursor.getDouble(8),cursor.getInt(9),cursor.getString(10));
+                cursor.getString(3),   cursor.getString(4),cursor.getString(5),cursor.getDouble(8),cursor.getInt(9),cursor.getString(10));
 
         // 回傳結果
         return result;
