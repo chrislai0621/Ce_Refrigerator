@@ -36,7 +36,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         // 建立應用程式需要的表格
-
+        //如果沒有資料表的話，就會執行這
         db.execSQL(CategoryDao.CREATE_TABLE);
         db.execSQL(FoodDao.CREATE_TABLE);
         db.execSQL(FoodListDao.CREATE_TABLE);
@@ -45,6 +45,7 @@ public class MyDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        //表格有異動時侯執行
         // 刪除原有的表格
         // 刪除原有的表格
         db.execSQL("DROP TABLE IF EXISTS " + CategoryDao.TABLE_NAME);

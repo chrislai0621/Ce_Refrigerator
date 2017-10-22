@@ -28,9 +28,12 @@
 
         <TextView
             style="@style/ItemDetails_TextView"
-            android:text="@string/Category" />
+            android:text="@string/Category"
+            />
 
-        <EditText style="@style/ItemDetails_EditView" />
+        <Spinner
+            android:id="@+id/spCategory"
+            style="@style/ItemDetails_Spinner"  />
 
     </LinearLayout>
 
@@ -44,8 +47,9 @@
             android:text="@string/ItemName" />
 
 
-        <EditText style="@style/ItemDetails_EditView" />
-
+        <Spinner
+            android:id="@+id/spFood"
+            style="@style/ItemDetails_Spinner"/>
     </LinearLayout>
 
     <LinearLayout
@@ -53,10 +57,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <TextView android:id="@+id/tvPurchaseDate"
             style="@style/ItemDetails_TextView"
-            android:text="@string/productionDate" />
+            android:text="@string/productionDate"
+            />
 
+<<<<<<< .mine
         <EditText
             android:id="@+id/editText2"
             android:layout_width="wrap_content"
@@ -64,6 +70,15 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="date" />
+=======
+        <EditText android:id="@+id/etPurchaseDate"
+            style="@style/ItemDetails_EditViewDate"
+android:focusable="false"/>
+
+
+
+
+>>>>>>> .theirs
 
     </LinearLayout>
 
@@ -72,10 +87,12 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
+        <TextView android:id="@+id/tvExpiredDate"
             style="@style/ItemDetails_TextView"
-            android:text="@string/ExpirationDate" />
+            android:text="@string/ExpirationDate"
+           />
 
+<<<<<<< .mine
         <EditText
             android:id="@+id/editText3"
             android:layout_width="wrap_content"
@@ -83,6 +100,15 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="date" />
+=======
+        <EditText android:id="@+id/etExpiredDate"
+            style="@style/ItemDetails_EditViewDate"
+            android:focusable="false" />
+
+
+
+
+>>>>>>> .theirs
 
     </LinearLayout>
 

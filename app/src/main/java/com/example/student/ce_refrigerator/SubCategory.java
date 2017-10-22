@@ -69,9 +69,7 @@ TextView tvCategory;
 
     public void BackPage(View v)
     {
-        Intent it  = new Intent(SubCategory.this,Category.class);
-        startActivity(it);
-
+        finish();
     }
 
     /**

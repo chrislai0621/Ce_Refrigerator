@@ -62,9 +62,7 @@ public class Category extends AppCompatActivity {
 
 public void BackPage(View v)
 {
-    Intent it  = new Intent(Category.this,MainActivity.class);
-    startActivity(it);
-
+  finish();
 }
 
     /**
@@ -133,9 +131,10 @@ public void BackPage(View v)
                 break;
             case 2://刪涂
                 category category1 = listCategory.get(selectedIndex);
+                foodListDao.deleteCategory(category1.getId());//刪掉食物清單
                 foodDao.deleteCategory(category1.getId());//刪掉食物名稱清單
                 categoryDao.delete(category1.getId());//刪掉食品大類清單
-                foodListDao.deleteCategory(category1.getId());//刪掉食物清單
+
                 getData();
                 adapter = (ArrayAdapter<String>) listview.getAdapter();
                 adapter.notifyDataSetChanged();
