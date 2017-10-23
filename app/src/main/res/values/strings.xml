@@ -7,8 +7,8 @@
     <string name="Amount">採購金額：</string>
     <string name="Compartment">儲存位置：</string>
     <string name="Note">備　　註：</string>
-    <string name="Freezer">冷凍室</string>
-    <string name="fridge">冷藏室</string>
+    <string name="Freezer">冷凍</string>
+    <string name="fridge">冷藏</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

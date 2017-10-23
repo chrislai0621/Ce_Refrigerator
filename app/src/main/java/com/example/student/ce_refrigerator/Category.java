@@ -132,7 +132,7 @@ public class Category extends AppCompatActivity {
             case 2://刪涂
                 AlertDialog.Builder builder = new AlertDialog.Builder(Category.this);
                 builder.setTitle("確認刪除");
-                builder.setMessage("請確認是否刪除本筆資料?");
+                builder.setMessage("請確認是否刪除本筆資料,建過的食材資料也會一併刪除?");
                 builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

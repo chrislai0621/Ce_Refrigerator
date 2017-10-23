@@ -139,6 +139,7 @@
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
           android:onClick="onclick_delete"
+          style="@style/Button"
           android:text="刪除"
           />
 
@@ -146,6 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onclick_shopping_list"
+            style="@style/Button"
             android:text="轉至採購清單"
             />
     </LinearLayout>

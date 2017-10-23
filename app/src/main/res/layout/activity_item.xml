@@ -110,24 +110,28 @@ android:focusable="false"/>
 
         <RadioGroup
             android:layout_width="0dp"
-            android:layout_weight="4"
             android:layout_height="wrap_content"
+            android:layout_weight="4"
             android:orientation="horizontal">
-            <RadioButton android:id="@+id/rb1"
+
+            <RadioButton
+                android:id="@+id/rb1"
                 style="@style/ItemDetails_RadioButton"
-                android:text="@string/fridge"
                 android:checked="true"
                 android:tag="0"
-               />
-            <RadioButton  android:id="@+id/rb2"
+                android:text="@string/fridge" />
+
+            <RadioButton
+                android:id="@+id/rb2"
                 style="@style/ItemDetails_RadioButton"
-                android:text="@string/Freezer"
-                android:tag="1"/>
+                android:tag="1"
+                android:text="@string/Freezer" />
 
 
         </RadioGroup>
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

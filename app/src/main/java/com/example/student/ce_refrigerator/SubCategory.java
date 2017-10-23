@@ -64,7 +64,7 @@ TextView tvCategory;
         tvCategory  =(TextView)findViewById(R.id.tvCategory);
         SubCategorydialog = new FoodCategoryFragment();
         registerForContextMenu(listview);//設定listview有menu
-        tvCategory.setText("食品類別："+ categoryName);
+        tvCategory.setText("食材類別："+ categoryName);
 
     }
 
@@ -132,7 +132,7 @@ TextView tvCategory;
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(SubCategory.this);
                 builder.setTitle("確認刪除");
-                builder.setMessage("請確認是否刪除本筆資料?");
+                builder.setMessage("請確認是否刪除本筆資料,建過的食材資料也會一併刪除?");
                 builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

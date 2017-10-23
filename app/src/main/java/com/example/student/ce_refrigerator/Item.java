@@ -163,8 +163,10 @@ public class Item extends AppCompatActivity {
     }
 
     private void setSpinnerAdapter() {
-        _AdapterCategory = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayCategory);
-        _AdapterFood = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayFood);
+        _AdapterCategory = new ArrayAdapter<String>(this, R.layout.spinner_style, arrayCategory);
+        _AdapterFood = new ArrayAdapter<String>(this, R.layout.spinner_style, arrayFood);
+        _AdapterCategory.setDropDownViewResource(R.layout.spinner_style);
+        _AdapterFood.setDropDownViewResource(R.layout.spinner_style);
         listCategory = categoryDao.getAll();
         if(listCategory.size() ==0)
         {

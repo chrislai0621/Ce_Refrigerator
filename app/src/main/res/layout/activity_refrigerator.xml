@@ -22,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:onClick="onClickFoodList"
-            android:text="冷藏" />
+            android:text="冷藏"
+            style="@style/Button"/>
 
         <Button
             android:id="@+id/btnFreezing"
@@ -30,7 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/btnCold"
             android:onClick="onClickFoodList"
-            android:text="冷凍" />
+            android:text="冷凍"
+            style="@style/Button"/>
     </RelativeLayout>
 
 
