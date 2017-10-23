@@ -15,4 +15,11 @@
         android:layout_height="wrap_content"
         android:text="採購清單"/>
     <include layout="@layout/shopping_list_content" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onclick_delete"
+        style="@style/Button"
+        android:text="刪除"
+        />
 </LinearLayout>
