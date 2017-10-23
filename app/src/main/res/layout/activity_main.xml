@@ -7,12 +7,11 @@
     android:orientation="vertical"
     tools:context="com.example.student.ce_refrigerator.MainActivity">
 
-
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:srcCompat="@drawable/title_1"
+        app:srcCompat="@drawable/title_2"
         android:layout_gravity="center"
         />
 

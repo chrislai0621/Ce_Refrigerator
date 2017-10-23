@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.student.ce_refrigerator.Dao.CategoryDao;
 import com.example.student.ce_refrigerator.Dao.FoodDao;
@@ -165,6 +166,10 @@ public class Item extends AppCompatActivity {
         _AdapterCategory = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayCategory);
         _AdapterFood = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, arrayFood);
         listCategory = categoryDao.getAll();
+        if(listCategory.size() ==0)
+        {
+            Toast.makeText(this,"請維護食材類別",Toast.LENGTH_LONG);
+        }
         for (category o : listCategory) {
             arrayCategory.add(o.getName());
         }
@@ -178,6 +183,10 @@ public class Item extends AppCompatActivity {
                 categoryid = listCategory.get(i).getId();
                 listfood = foodDao.getAll(categoryid);
                 arrayFood.clear();
+                if(listfood.size() ==0)
+                {
+                    Toast.makeText(Item.this,"請維護食材名稱",Toast.LENGTH_LONG);
+                }
                 for (food o : listfood) {
                     arrayFood.add(o.getName());
                 }
