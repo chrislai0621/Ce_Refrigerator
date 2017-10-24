@@ -2,7 +2,6 @@ package com.example.student.ce_refrigerator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -365,23 +364,23 @@ public class Item extends AppCompatActivity {
         }
     }
 
-    public File getBitmapFile(Intent data) {
-        Uri selectedImage = data.getData();
-        Cursor cursor = getContentResolver().query(selectedImage, new String[]{android.provider.MediaStore.Images.ImageColumns.DATA}, null, null, null);
-        cursor.moveToFirst();
-
-        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
-        String selectedImagePath = cursor.getString(idx);
-        cursor.close();
-
-        return new File(selectedImagePath);
-    }
-    public String getPath(Uri uri) {
-        String[] projection = { MediaStore.Images.Media.DATA };
-        Cursor cursor = managedQuery(uri, projection, null, null, null);
-        startManagingCursor(cursor);
-        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
-        cursor.moveToFirst();
-        return cursor.getString(column_index);
-    }
+//    public File getBitmapFile(Intent data) {
+//        Uri selectedImage = data.getData();
+//        Cursor cursor = getContentResolver().query(selectedImage, new String[]{android.provider.MediaStore.Images.ImageColumns.DATA}, null, null, null);
+//        cursor.moveToFirst();
+//
+//        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+//        String selectedImagePath = cursor.getString(idx);
+//        cursor.close();
+//
+//        return new File(selectedImagePath);
+//    }
+//    public String getPath(Uri uri) {
+//        String[] projection = { MediaStore.Images.Media.DATA };
+//        Cursor cursor = managedQuery(uri, projection, null, null, null);
+//        startManagingCursor(cursor);
+//        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+//        cursor.moveToFirst();
+//        return cursor.getString(column_index);
+//    }
 }

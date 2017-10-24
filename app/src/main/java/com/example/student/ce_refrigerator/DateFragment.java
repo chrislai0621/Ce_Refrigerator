@@ -33,8 +33,8 @@ public class DateFragment extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
         // TODO Auto-generated method stub
-        String date =  String.valueOf(year) + "/" + String.valueOf(month+1) + "/"
-                + String.valueOf(day);
+        String date =  String.valueOf(year) + "/" + String.format("%02d",month+1)  + "/"
+                + String.format("%02d", day) ;
         item.setDate(date);
     }
 
