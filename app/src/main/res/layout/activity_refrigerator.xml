@@ -35,7 +35,9 @@
             style="@style/Button"/>
     </RelativeLayout>
 
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:id="@+id/main_layout"
@@ -44,4 +46,5 @@
         android:baselineAligned="false">
 
     </LinearLayout>
+    </ScrollView>
 </LinearLayout>
