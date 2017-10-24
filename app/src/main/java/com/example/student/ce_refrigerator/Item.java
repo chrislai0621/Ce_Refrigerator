@@ -2,8 +2,9 @@ package com.example.student.ce_refrigerator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.Matrix;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -36,10 +37,10 @@ import java.util.Calendar;
 import java.util.List;
 
 public class Item extends AppCompatActivity {
-    static final int PICK_FROM_CAMERA = 123;
-    static final int PICK_FROM_GALLERY = 321;
-    static final int PICK_FROM_GET = 456;
-
+    static final int PICK_FROM_CAMERA = 1;
+    static final int PICK_FROM_GALLERY = 2;
+    static final int PICK_FROM_CAMERA_GET = 3;
+    static final int PICK_FROM_GALLERY_CET = 4;
     private Button btnAction;
     private EditText etExpiredDate, etPurchaseDate, etPurchaseAmt, etRemark;
     private Spinner spCategory, spFood;
@@ -62,6 +63,7 @@ public class Item extends AppCompatActivity {
     private FoodListDao foodListDao;
 
     private Uri outputFileUri;
+    private Uri outputFileUri2;
     private Calendar mCal;
     private String imgFile;
     private String picPath;
@@ -69,6 +71,7 @@ public class Item extends AppCompatActivity {
     private long foodid;
     private boolean havePic = false;
     private CharSequence s;
+    private String mSelectedImagePath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -168,9 +171,8 @@ public class Item extends AppCompatActivity {
         _AdapterCategory.setDropDownViewResource(R.layout.spinner_style);
         _AdapterFood.setDropDownViewResource(R.layout.spinner_style);
         listCategory = categoryDao.getAll();
-        if(listCategory.size() ==0)
-        {
-            Toast.makeText(this,"請維護食材類別",Toast.LENGTH_LONG);
+        if (listCategory.size() == 0) {
+            Toast.makeText(this, "請維護食材類別", Toast.LENGTH_LONG).show();
         }
         for (category o : listCategory) {
             arrayCategory.add(o.getName());
@@ -185,9 +187,8 @@ public class Item extends AppCompatActivity {
                 categoryid = listCategory.get(i).getId();
                 listfood = foodDao.getAll(categoryid);
                 arrayFood.clear();
-                if(listfood.size() ==0)
-                {
-                    Toast.makeText(Item.this,"請維護食材名稱",Toast.LENGTH_LONG);
+                if (listfood.size() == 0) {
+                    Toast.makeText(Item.this, "請維護食材名稱", Toast.LENGTH_LONG).show();
                 }
                 for (food o : listfood) {
                     arrayFood.add(o.getName());
@@ -225,8 +226,6 @@ public class Item extends AppCompatActivity {
         if (sdCardExist) {
 
             Log.d("PIC_PATH", Environment.getExternalStorageDirectory().toString());//得到根目錄
-            Log.d("PIC_PATH", Environment.getDataDirectory().toString());
-            Log.d("PIC_PATH", Environment.getRootDirectory().toString());
             Log.d("PIC_PATH", picPath);
             File file = new File(picPath);
             if (!file.exists()) {
@@ -287,17 +286,35 @@ public class Item extends AppCompatActivity {
 
                                 s = DateFormat.format("yyyyMMddHHmmss", mCal.getTime());
                                 imgFile = s.toString() + ".jpg";
+
+                                File tmpFile = new File(picPath, imgFile);
                                 Intent intent = new Intent(
                                         android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
-                                File tmpFile = new File(picPath, imgFile);
                                 outputFileUri = Uri.fromFile(tmpFile);
                                 intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
                                 startActivityForResult(intent, PICK_FROM_CAMERA);
+
                                 break;
                             case 1://相簿
-                                Intent it = new Intent(Intent.ACTION_PICK, null);
-                                it.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                                startActivityForResult(it, PICK_FROM_GALLERY);
+
+                                s = DateFormat.format("yyyyMMddHHmmss", mCal.getTime());
+                                imgFile = s.toString() + ".jpg";
+
+                                File tmpFile2 = new File(picPath, imgFile);
+                                outputFileUri = Uri.fromFile(tmpFile2);
+                                Intent photoPickerIntent =
+                                        new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                photoPickerIntent.setType("image/*");
+                                photoPickerIntent.putExtra("crop", "true");
+                                photoPickerIntent.putExtra("aspectX", 1);
+                                photoPickerIntent.putExtra("aspectY", 1);
+                                photoPickerIntent.putExtra("outputX", 300);
+                                photoPickerIntent.putExtra("outputY", 300);
+                                photoPickerIntent.putExtra("scale", true);
+                                photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                                startActivityForResult(photoPickerIntent, PICK_FROM_CAMERA_GET);
+
+
                                 break;
                         }
                     }
@@ -308,46 +325,63 @@ public class Item extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-
-        if (requestCode == PICK_FROM_CAMERA || requestCode == PICK_FROM_GALLERY) {
-            if (resultCode == RESULT_OK) {
-
-                Intent intent = new Intent("com.android.camera.action.CROP");
-                intent.setDataAndType(outputFileUri, "image/*");
-                intent.putExtra("crop", "true");  //crop = true時就打開裁切畫面
-                intent.putExtra("aspectX", 1);    //aspectX與aspectY是設定裁切框的比例
-                intent.putExtra("aspectY", 1);
-                intent.putExtra("outputX", 150);  //這則是裁切的照片大小
-                intent.putExtra("outputY", 150);
-                intent.putExtra("return-data", true);
-                startActivityForResult(intent, PICK_FROM_GET);
-
-            }
-        } else if (requestCode == PICK_FROM_GET) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap photo = extras.getParcelable("data");
-
-                int oldwidth = photo.getWidth();
-                int oldheight = photo.getHeight();
-                float scaleWidth = 100 / (float) oldwidth;
-                float scaleHeight = 100 / (float) oldheight;
-                Matrix matrix = new Matrix();
-
-                matrix.postScale(scaleWidth, scaleHeight);
-                // create the new Bitmap object
-
-                Bitmap resizedBitmap = Bitmap.createBitmap(photo, 0, 0, oldwidth,
-                        oldheight, matrix, true);
-                ImageView1.setImageBitmap(resizedBitmap);
-                //String img_address = Environment.getExternalStorageDirectory() + imgFile;
-                //Bitmap bitmap = BitmapFactory.decodeFile(img_address);
-                //ImageView1.setImageBitmap(bitmap);
-
+        switch (requestCode) {
+            case PICK_FROM_CAMERA:
+                if (resultCode == RESULT_OK) {
+                    Intent intent = new Intent("com.android.camera.action.CROP");
+                    intent.setDataAndType(outputFileUri, "image/*");
+                    intent.putExtra("crop", "true");  //crop = true時就打開裁切畫面
+                    intent.putExtra("aspectX", 1);    //aspectX與aspectY是設定裁切框的比例
+                    intent.putExtra("aspectY", 1);
+                    intent.putExtra("outputX", 300);  //這則是裁切的照片大小
+                    intent.putExtra("outputY", 300);
+                    intent.putExtra("return-data", true);
+                    intent.putExtra("outputFormat", "JPEG");// 圖片格式
+                    startActivityForResult(intent, PICK_FROM_CAMERA_GET);
+                }
+                break;
+            case PICK_FROM_CAMERA_GET:
+                Bitmap photo = getBitmapFromSDCard(imgFile);
+                ImageView1.setImageBitmap(photo);
                 havePic = true;
-            }
+                break;
+
         }
+
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    //讀取SDCard圖片，型態為Bitmap
+    private static Bitmap getBitmapFromSDCard(String file) {
+        try {
+            String sd = Environment.getExternalStorageDirectory().toString();
+            sd = sd + File.separator + "CeRefrigerator" + File.separator;
+            Bitmap bitmap = BitmapFactory.decodeFile(sd + file);
+            return bitmap;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public File getBitmapFile(Intent data) {
+        Uri selectedImage = data.getData();
+        Cursor cursor = getContentResolver().query(selectedImage, new String[]{android.provider.MediaStore.Images.ImageColumns.DATA}, null, null, null);
+        cursor.moveToFirst();
+
+        int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+        String selectedImagePath = cursor.getString(idx);
+        cursor.close();
+
+        return new File(selectedImagePath);
+    }
+    public String getPath(Uri uri) {
+        String[] projection = { MediaStore.Images.Media.DATA };
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        startManagingCursor(cursor);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
 }

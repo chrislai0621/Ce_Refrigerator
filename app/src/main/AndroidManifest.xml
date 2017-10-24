@@ -14,20 +14,28 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_refrigerator"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        android:theme="@style/AppTheme"
+        >
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Item" />
-        <activity android:name=".Category" />
-        <activity android:name=".SubCategory" />
-        <activity android:name=".Refrigerator" />
-        <activity android:name=".item2" />
-        <activity android:name=".Shopping_cart_list"></activity>
+        <activity android:name=".Item"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Category"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".SubCategory"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Refrigerator"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".item2"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".Shopping_cart_list"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

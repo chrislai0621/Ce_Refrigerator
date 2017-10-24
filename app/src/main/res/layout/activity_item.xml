@@ -118,12 +118,14 @@ android:focusable="false"/>
                 android:id="@+id/rb1"
                 style="@style/ItemDetails_RadioButton"
                 android:checked="true"
+                android:buttonTint="@color/colorPrimaryDark"
                 android:tag="0"
                 android:text="@string/fridge" />
 
             <RadioButton
                 android:id="@+id/rb2"
                 style="@style/ItemDetails_RadioButton"
+                android:buttonTint="@color/colorPrimaryDark"
                 android:tag="1"
                 android:text="@string/Freezer" />
 

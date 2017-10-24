@@ -3,6 +3,7 @@ package com.example.student.ce_refrigerator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -65,6 +66,8 @@ TextView tvCategory;
         SubCategorydialog = new FoodCategoryFragment();
         registerForContextMenu(listview);//設定listview有menu
         tvCategory.setText("食材類別："+ categoryName);
+        tvCategory.setTextSize(20);
+        tvCategory.setTextColor(Color.parseColor("#245883"));
 
     }
 

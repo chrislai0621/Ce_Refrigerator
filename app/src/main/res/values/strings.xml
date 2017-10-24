@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">CE_Refrigerator</string>
     <string name="Category">食材類別：</string>
+    <string name="Category_1">食材類別</string>
     <string name="ItemName">食材名稱：</string>
     <string name="productionDate">採購日期：</string>
     <string name="ExpirationDate">到期日期：</string>
@@ -9,6 +10,7 @@
     <string name="Note">備　　註：</string>
     <string name="Freezer">冷凍</string>
     <string name="fridge">冷藏</string>
+    <string name="shopping">採購清單</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

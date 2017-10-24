@@ -11,28 +11,32 @@
 
     <CheckBox android:id="@+id/cbShopping"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_height="wrap_content"
+        android:buttonTint="@color/colorLightBlue"
+        />
+<!--
    <TextView android:id="@+id/tvFoodName1"
        android:layout_width="wrap_content"
        android:layout_height="wrap_content"
         android:text="食材名稱："/>
-
+-->
     <TextView android:id="@+id/tvFoodName2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_weight="2"
+        style="@style/listView_TextView_shoppinglist"
 
       />
     <TextView android:id="@+id/tvPurchaseAmt1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-
+        style="@style/listView_TextView_shoppinglist"
         android:text="採購金額："/>
+
     <TextView android:id="@+id/tvPurchaseAmt2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-
+        style="@style/listView_TextView_shoppinglist"
        />
 </LinearLayout>

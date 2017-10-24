@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:orientation="vertical">
     <include
         android:id="@+id/include1"
@@ -13,7 +15,10 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="採購清單"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/shopping"
+        style="@style/listView_TextView_Category"/>
     <include layout="@layout/shopping_list_content" />
     <Button
         android:layout_width="wrap_content"

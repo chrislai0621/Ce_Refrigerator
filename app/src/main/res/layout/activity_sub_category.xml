@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     >
     <include android:id="@+id/include1"
         android:layout_height="wrap_content"
@@ -13,8 +15,13 @@
 
     <TextView android:id="@+id/tvCategory"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"/>
+
     <ListView android:id="@+id/lvSubCategory"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="#d83786c8"
+        android:dividerHeight="1px"
+        />
 </LinearLayout>

@@ -4,10 +4,12 @@ package com.example.student.ce_refrigerator;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +26,6 @@ import com.example.student.ce_refrigerator.EmptyData.food_list;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static android.R.attr.bitmap;
 
 
 /**
@@ -63,17 +63,24 @@ public class RefrigeratorFragment extends android.app.Fragment {
         foodDao = new FoodDao(getActivity());
         listCategory = categoryDao.getAll();
         it = new Intent((Refrigerator) getActivity(), item2.class);
-//        LinearLayout ll = new LinearLayout(v.getContext());
-//        ll.setOrientation(1);//0水平排列，1垂直排列
-//        LinearLayout.LayoutParams params1 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);//設定寬高
-//        ll.setLayoutParams(params1);
 
+        // 取得螢幕解析度
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 
+        int vWidth = dm.widthPixels;
+        vWidth = (int) ((vWidth * 0.9) / 3);//算出每張圖的寬度
+        if(vWidth>=300)
+        {
+            vWidth=300;
+        }
         for (category c : listCategory) {
             listfoodlist = foodListDao.getCategory(c.getId(), storage);
             if (listfoodlist.size() > 0) {
                 TextView tvName = new TextView(v.getContext());
                 tvName.setText("食品類別：" + c.getName());
+                tvName.setTextColor(Color.parseColor("#245883")); //設定文字顏色
+                tvName.setTextSize(20); //設定文字大小
                 //ll.addView(tvName);
                 ((LinearLayout) ll).addView(tvName);
                 int j = 1;
@@ -89,8 +96,10 @@ public class RefrigeratorFragment extends android.app.Fragment {
                     food f2 = foodDao.get(f.getFood_id());
                     TextView imgTextView = new TextView(v.getContext());
                     imgTextView.setText(f2.getName());
-                    imgTextView.setBackgroundResource(R.drawable.camera);
-                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(300, 300);//設定寬高
+                    imgTextView.setTextSize(18);//設定文字大小
+
+                    LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(vWidth, vWidth);//設定寬高
+                    params.setMargins(15, 15, 15, 15); // llp.setMargins(left, top, right, bottom);
                     imgTextView.setLayoutParams(params);
                     imgTextView.setClickable(true);
                     imgTextView.setOnClickListener(new View.OnClickListener() {
@@ -101,11 +110,14 @@ public class RefrigeratorFragment extends android.app.Fragment {
                             startActivity(it);
                         }
                     });
+
                     //判斷如果有上傳照片的話，有照片就顯示上傳的照片，若沒有的話就顯示預設的camera的照片
                     if (!f.getImg_id().isEmpty()) {
+                        imgTextView.setTextColor(Color.parseColor("#FFFFFF"));   //設定文字顏色
                         imgTextView.setBackground(new BitmapDrawable(getResources(), getBitmapFromSDCard(f.getImg_id())));
 
                     } else {
+                        imgTextView.setTextColor(Color.parseColor("#666666"));   //設定文字顏色
                         imgTextView.setBackgroundResource(R.drawable.camera);
                     }
 
