@@ -15,7 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import com.example.student.ce_refrigerator.SharingMethod;
 import com.example.student.ce_refrigerator.Dao.CategoryDao;
 import com.example.student.ce_refrigerator.Dao.FoodDao;
 import com.example.student.ce_refrigerator.Dao.FoodListDao;
@@ -26,6 +26,9 @@ import com.example.student.ce_refrigerator.EmptyData.food_list;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.example.student.ce_refrigerator.SharingMethod.getBitmapFromSDCard;
+import static com.example.student.ce_refrigerator.SharingMethod.getPicWidth;
 
 
 /**
@@ -68,12 +71,8 @@ public class RefrigeratorFragment extends android.app.Fragment {
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        int vWidth = dm.widthPixels;
-        vWidth = (int) ((vWidth * 0.9) / 3);//算出每張圖的寬度
-        if(vWidth>=300)
-        {
-            vWidth=300;
-        }
+        int vWidth = getPicWidth(getActivity());
+
         for (category c : listCategory) {
             listfoodlist = foodListDao.getCategory(c.getId(), storage);
             if (listfoodlist.size() > 0) {
@@ -146,16 +145,6 @@ public class RefrigeratorFragment extends android.app.Fragment {
         this.storage = storage;
     }
 
-    //讀取SDCard圖片，型態為Bitmap
-    private static Bitmap getBitmapFromSDCard(String file) {
-        try {
-            String sd = Environment.getExternalStorageDirectory().toString();
-            sd = sd + File.separator + "CeRefrigerator" + File.separator;
-            Bitmap bitmap = BitmapFactory.decodeFile(sd + file);
-            return bitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
+
 }

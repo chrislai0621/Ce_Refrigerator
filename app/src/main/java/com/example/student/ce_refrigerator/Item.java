@@ -18,6 +18,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -34,6 +35,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+
+import static com.example.student.ce_refrigerator.SharingMethod.getPicWidth;
 
 public class Item extends AppCompatActivity {
     static final int PICK_FROM_CAMERA = 1;
@@ -71,7 +74,7 @@ public class Item extends AppCompatActivity {
     private boolean havePic = false;
     private CharSequence s;
     private String mSelectedImagePath;
-
+private int picWidth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,6 +165,7 @@ public class Item extends AppCompatActivity {
 
             }
         });
+        picWidth=getPicWidth(Item.this);
     }
 
     private void setSpinnerAdapter() {
@@ -307,9 +311,11 @@ public class Item extends AppCompatActivity {
                                 photoPickerIntent.putExtra("crop", "true");
                                 photoPickerIntent.putExtra("aspectX", 1);
                                 photoPickerIntent.putExtra("aspectY", 1);
-                                photoPickerIntent.putExtra("outputX", 300);
-                                photoPickerIntent.putExtra("outputY", 300);
+                                photoPickerIntent.putExtra("outputX", picWidth);
+                                photoPickerIntent.putExtra("outputY", picWidth);
                                 photoPickerIntent.putExtra("scale", true);
+                                photoPickerIntent.putExtra("return-data", true);
+                                photoPickerIntent.putExtra("outputFormat", "JPEG");// 圖片格式
                                 photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
                                 startActivityForResult(photoPickerIntent, PICK_FROM_CAMERA_GET);
 
@@ -332,8 +338,8 @@ public class Item extends AppCompatActivity {
                     intent.putExtra("crop", "true");  //crop = true時就打開裁切畫面
                     intent.putExtra("aspectX", 1);    //aspectX與aspectY是設定裁切框的比例
                     intent.putExtra("aspectY", 1);
-                    intent.putExtra("outputX", 300);  //這則是裁切的照片大小
-                    intent.putExtra("outputY", 300);
+                    intent.putExtra("outputX", picWidth);  //這則是裁切的照片大小
+                    intent.putExtra("outputY", picWidth);
                     intent.putExtra("return-data", true);
                     intent.putExtra("outputFormat", "JPEG");// 圖片格式
                     startActivityForResult(intent, PICK_FROM_CAMERA_GET);
@@ -341,7 +347,18 @@ public class Item extends AppCompatActivity {
                 break;
             case PICK_FROM_CAMERA_GET:
                 Bitmap photo = getBitmapFromSDCard(imgFile);
+                try{
+                    Log.d("IMAGE_FILE","Width="+ photo.getWidth()+"Height="+photo.getHeight());
+                    Log.d("IMAGE_FILE","Byte="+ photo.getByteCount());
+                }
+                catch (Exception e)
+                {
+                 Log.d("IMAGE_FILE",e.getMessage());
+                }
+
                 ImageView1.setImageBitmap(photo);
+                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(picWidth, picWidth);//設定寬高
+                ImageView1.setLayoutParams(params);
                 havePic = true;
                 break;
 

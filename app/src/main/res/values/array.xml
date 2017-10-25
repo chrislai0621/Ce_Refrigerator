@@ -2,7 +2,7 @@
 <resources>
     <string-array name="camera">
         <item>相機</item>
-        <item>相薄</item>
+        <item>相簿</item>
         <item>取消</item>
     </string-array>
 </resources>

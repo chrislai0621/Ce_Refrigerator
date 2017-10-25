@@ -1,14 +1,15 @@
 package com.example.student.ce_refrigerator;
 
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.student.ce_refrigerator.Dao.CategoryDao;
@@ -20,9 +21,9 @@ import com.example.student.ce_refrigerator.EmptyData.food;
 import com.example.student.ce_refrigerator.EmptyData.food_list;
 import com.example.student.ce_refrigerator.EmptyData.shopping_list;
 
-import java.io.File;
-
 import static com.example.student.ce_refrigerator.R.id.ImageView1;
+import static com.example.student.ce_refrigerator.SharingMethod.getBitmapFromSDCard;
+import static com.example.student.ce_refrigerator.SharingMethod.getPicWidth;
 
 public class item2 extends AppCompatActivity {
     private FoodListDao foodListDao;
@@ -36,8 +37,8 @@ public class item2 extends AppCompatActivity {
     private Button btnAction;
     private category c;
     private food f1;
-    private String picPath;
-
+    private int picPath;
+private int picWidth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +65,11 @@ public class item2 extends AppCompatActivity {
         imageView = (ImageView) findViewById(ImageView1);
         btnAction = (Button) findViewById(R.id.btnAction);
         btnAction.setVisibility(View.GONE);
+        picPath = getPicWidth(item2.this);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(picWidth, picWidth);//設定寬高
+        params.setMargins(15, 15, 15, 15); // llp.setMargins(left, top, right, bottom);
+        imageView.setLayoutParams(params);
+
     }
 
     private void setValue() {
@@ -84,10 +90,12 @@ public class item2 extends AppCompatActivity {
         tvRemark.setText(foodList.getRemark());
         tvPurchaseAmt.setText(String.valueOf(foodList.getPurchase_amount()));
         if (!foodList.getImg_id().isEmpty()) {
-            imageView.setImageBitmap(getBitmapFromSDCard(foodList.getImg_id()));
+            //imageView.setImageBitmap(getBitmapFromSDCard(foodList.getImg_id()));
+            imageView.setBackground(new BitmapDrawable(getResources(), getBitmapFromSDCard(foodList.getImg_id())));
         } else {
             imageView.setImageResource(R.drawable.camera);
         }
+
 
     }
 
@@ -95,9 +103,24 @@ public class item2 extends AppCompatActivity {
         finish();
     }
 
-    public void onclick_delete(View v) {
-        foodListDao.delete(foodListid);
-        finish();
+    public void onclick_delete(View v) { AlertDialog.Builder builder = new AlertDialog.Builder(item2.this);
+        builder.setTitle("確認刪除");
+        builder.setMessage("請確認是否刪除資料?");
+        builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                foodListDao.delete(foodListid);
+                finish();
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.show();
+
     }
 
     public void onclick_shopping_list(View v) {
@@ -107,16 +130,5 @@ public class item2 extends AppCompatActivity {
         startActivity(it);
     }
 
-    //讀取SDCard圖片，型態為Bitmap
-    private static Bitmap getBitmapFromSDCard(String file) {
-        try {
-            String sd = Environment.getExternalStorageDirectory().toString();
-            sd = sd + File.separator + "CeRefrigerator" + File.separator;
-            Bitmap bitmap = BitmapFactory.decodeFile(sd + file);
-            return bitmap;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+
 }
