@@ -27,6 +27,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.student.ce_refrigerator.R.id.textView2;
 import static com.example.student.ce_refrigerator.SharingMethod.getBitmapFromSDCard;
 import static com.example.student.ce_refrigerator.SharingMethod.getPicWidth;
 
@@ -113,7 +114,19 @@ public class RefrigeratorFragment extends android.app.Fragment {
                     //判斷如果有上傳照片的話，有照片就顯示上傳的照片，若沒有的話就顯示預設的camera的照片
                     if (!f.getImg_id().isEmpty()) {
                         imgTextView.setTextColor(Color.parseColor("#FFFFFF"));   //設定文字顏色
-                        imgTextView.setBackground(new BitmapDrawable(getResources(), getBitmapFromSDCard(f.getImg_id())));
+                        Bitmap bitmap=getBitmapFromSDCard(f.getImg_id());
+
+                        if(bitmap != null)
+                        {
+                            BitmapDrawable bitmapDrawable=new BitmapDrawable(getResources(), bitmap);
+                            imgTextView.setBackground(bitmapDrawable);
+                        }
+                        else
+                        {
+                            imgTextView.setTextColor(Color.parseColor("#666666"));   //設定文字顏色
+                            imgTextView.setBackgroundResource(R.drawable.camera);
+                        }
+
 
                     } else {
                         imgTextView.setTextColor(Color.parseColor("#666666"));   //設定文字顏色

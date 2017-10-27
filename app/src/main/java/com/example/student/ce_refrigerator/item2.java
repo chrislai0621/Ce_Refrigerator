@@ -2,13 +2,14 @@ package com.example.student.ce_refrigerator;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,7 +22,6 @@ import com.example.student.ce_refrigerator.EmptyData.food;
 import com.example.student.ce_refrigerator.EmptyData.food_list;
 import com.example.student.ce_refrigerator.EmptyData.shopping_list;
 
-import static com.example.student.ce_refrigerator.R.id.ImageView1;
 import static com.example.student.ce_refrigerator.SharingMethod.getBitmapFromSDCard;
 import static com.example.student.ce_refrigerator.SharingMethod.getPicWidth;
 
@@ -32,13 +32,14 @@ public class item2 extends AppCompatActivity {
     private FoodDao foodDao;
     private food_list foodList;
     private long foodListid = 0;
-    private TextView tvCategory1, tvFood1, tvPurchaseDate1, tvExpiredDate1, tvRb, tvRemark, tvPurchaseAmt;
-    private ImageView imageView;
+    private TextView tvCategory1, tvFood1, tvPurchaseDate1, tvExpiredDate1, tvRb, tvRemark, tvPurchaseAmt, textView2;
+
     private Button btnAction;
     private category c;
     private food f1;
-    private int picPath;
-private int picWidth;
+    private String picPath;
+    private int picWidth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +63,15 @@ private int picWidth;
         tvRb = (TextView) findViewById(R.id.tvRb);
         tvRemark = (TextView) findViewById(R.id.tvRemark);
         tvPurchaseAmt = (TextView) findViewById(R.id.tvPurchaseAmt);
-        imageView = (ImageView) findViewById(ImageView1);
+
         btnAction = (Button) findViewById(R.id.btnAction);
         btnAction.setVisibility(View.GONE);
-        picPath = getPicWidth(item2.this);
+        picWidth = getPicWidth(item2.this);
+        textView2=(TextView) findViewById(R.id.textView2);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(picWidth, picWidth);//設定寬高
-        params.setMargins(15, 15, 15, 15); // llp.setMargins(left, top, right, bottom);
-        imageView.setLayoutParams(params);
+        params.gravity = Gravity.CENTER_HORIZONTAL;
+        params.setMargins(15,15,15,15);
+        textView2.setLayoutParams(params);
 
     }
 
@@ -89,11 +92,22 @@ private int picWidth;
         }
         tvRemark.setText(foodList.getRemark());
         tvPurchaseAmt.setText(String.valueOf(foodList.getPurchase_amount()));
+
         if (!foodList.getImg_id().isEmpty()) {
-            //imageView.setImageBitmap(getBitmapFromSDCard(foodList.getImg_id()));
-            imageView.setBackground(new BitmapDrawable(getResources(), getBitmapFromSDCard(foodList.getImg_id())));
+            Bitmap bitmap = getBitmapFromSDCard(foodList.getImg_id());
+
+            if (bitmap != null) {
+                BitmapDrawable bitmapDrawable = new BitmapDrawable(getResources(), bitmap);
+                textView2.setBackground(bitmapDrawable);
+            } else {
+
+                textView2.setBackgroundResource(R.drawable.camera);
+            }
+
+
         } else {
-            imageView.setImageResource(R.drawable.camera);
+
+            textView2.setBackgroundResource(R.drawable.camera);
         }
 
 
@@ -103,7 +117,8 @@ private int picWidth;
         finish();
     }
 
-    public void onclick_delete(View v) { AlertDialog.Builder builder = new AlertDialog.Builder(item2.this);
+    public void onclick_delete(View v) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(item2.this);
         builder.setTitle("確認刪除");
         builder.setMessage("請確認是否刪除資料?");
         builder.setPositiveButton("確認", new DialogInterface.OnClickListener() {

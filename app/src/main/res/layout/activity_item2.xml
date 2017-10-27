@@ -14,12 +14,11 @@
         android:layout_width="wrap_content"
         layout="@layout/header"></include>
 
-    <ImageView android:id="@+id/ImageView1"
+    <TextView android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
-        android:src="@drawable/camera"
         />
 
     <LinearLayout
