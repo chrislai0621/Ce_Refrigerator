@@ -67,9 +67,14 @@ public class SharingMethod {
     }
 
     public static String getPicPath(String fileName) {
-        String sd = Environment.getExternalStorageDirectory().toString();
-        sd = sd + File.separator + "CeRefrigerator" + File.separator;
+        String sd = getPicDir();
         String path = sd + fileName;
         return path;
+    }
+    public static String getPicDir() {
+        String sd = Environment.getExternalStorageDirectory().toString();
+        sd = sd + File.separator + "CeRefrigerator" + File.separator;
+
+        return sd;
     }
 }

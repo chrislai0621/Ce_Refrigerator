@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -48,6 +49,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import static com.example.student.ce_refrigerator.SharingMethod.getBitmapFromSDCard;
+import static com.example.student.ce_refrigerator.SharingMethod.getPicDir;
 import static com.example.student.ce_refrigerator.SharingMethod.getPicPath;
 import static com.example.student.ce_refrigerator.SharingMethod.getPicWidth;
 
@@ -88,6 +90,7 @@ public class Item extends AppCompatActivity {
     private CharSequence s;
     private String mSelectedImagePath;
     private int picWidth;
+    private int android_version;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,8 +106,9 @@ public class Item extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             ImageView1.setEnabled(false);
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE
-            , Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
+                    , Manifest.permission.READ_EXTERNAL_STORAGE}, 0);
         }
+        getAndroidVersion();
     }
 
     private void initView() {
@@ -186,7 +190,7 @@ public class Item extends AppCompatActivity {
         picWidth = getPicWidth(Item.this);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(picWidth, picWidth);//設定寬高
         params.setMargins(15, 15, 15, 15);
-        params.gravity= Gravity.CENTER_HORIZONTAL;
+        params.gravity = Gravity.CENTER_HORIZONTAL;
         ImageView1.setLayoutParams(params);
         ImageView1.setBackgroundResource(R.drawable.camera);
     }
@@ -323,36 +327,34 @@ public class Item extends AppCompatActivity {
                             case 1://相簿
 //
                                 setimgFileName();
-//                                File tmpFile2 = new File(picPath, imgFileName);
-//                                outputFileUri = Uri.fromFile(tmpFile2);
-//                                Intent photoPickerIntent =
-//                                        new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                                photoPickerIntent.setType("image/*");
-//                                photoPickerIntent.putExtra("crop", "true");
-//                                photoPickerIntent.putExtra("aspectX", 4);
-//                                photoPickerIntent.putExtra("aspectY", 3);
-//                                photoPickerIntent.putExtra("outputX", picWidth);
-//                                photoPickerIntent.putExtra("outputY", picWidth);
-//                                    photoPickerIntent.putExtra("return-data", false);
-//                                photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());// 圖片格式
-//                                photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
-//                                Log.w("TAG", "f.getAbsolutePath():" + tmpFile2.getAbsolutePath());
-//                                startActivityForResult(photoPickerIntent, PICK_FROM_CAMERA);
-//                                Intent intent = new Intent(Intent.ACTION_PICK,android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                                intent.setType("image/*");
-//                                //startActivityForResult(Intent.createChooser(intent, "Select File"),PICK_FROM_GALLERY);
-//                                startActivityForResult(intent,PICK_FROM_GALLERY);
 
 
-                                //构建一个内容选择的Intent
-                                Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-                                //设置选择类型为图片类型
-                                intent.setType("image/*");
-                                //打开图片选择
-                                startActivityForResult(intent, PICK_FROM_GALLERY);
+                                if (android_version > 5) {
+                                    //构建一个内容选择的Intent
+                                    // Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+                                    Intent intent = new Intent(Intent.ACTION_PICK);
+                                    //设置选择类型为图片类型
+                                    intent.setType("image/*");
+                                    //打开图片选择
+                                    startActivityForResult(intent, PICK_FROM_GALLERY);
 
+                                } else {
+                                    File tmpFile2 = new File(picPath, imgFileName);
+                                    outputFileUri = Uri.fromFile(tmpFile2);
+                                    Intent photoPickerIntent =
+                                            new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                                    photoPickerIntent.setType("image/*");
+                                    photoPickerIntent.putExtra("crop", "true");
+                                    photoPickerIntent.putExtra("aspectX", 4);
+                                    photoPickerIntent.putExtra("aspectY", 3);
+                                    photoPickerIntent.putExtra("outputX", picWidth);
+                                    photoPickerIntent.putExtra("outputY", picWidth);
+                                    photoPickerIntent.putExtra("return-data", false);
+                                    photoPickerIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());// 圖片格式
+                                    photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+                                    startActivityForResult(photoPickerIntent, PICK_FROM_CAMERA_GET);
 
-
+                                }
                                 break;
                         }
                     }
@@ -395,17 +397,17 @@ public class Item extends AppCompatActivity {
 ////                        intent.putExtra("noFaceDetection", true);
 //                        intent.putExtra("output", outputFileUri);
 //                        startActivityForResult(intent, PICK_FROM_GALLERY_GET);
-                    if (data == null){
-                        return;
-                    }else{
-                        //用户从图库选择图片后会返回所选图片的Uri
+                if (data == null) {
+                    return;
+                } else {
+                    //用户从图库选择图片后会返回所选图片的Uri
 
-                        //获取到用户所选图片的Uri
-                        outputFileUri = data.getData();
-                        //返回的Uri为content类型的Uri,不能进行复制等操作,需要转换为文件Uri
-                        outputFileUri = convertUri(outputFileUri);
-                        startImageZoom(outputFileUri);
-                    }
+                    //获取到用户所选图片的Uri
+                    outputFileUri = data.getData();
+                    //返回的Uri为content类型的Uri,不能进行复制等操作,需要转换为文件Uri
+                    outputFileUri = convertUri(outputFileUri);
+                    startImageZoom(outputFileUri);
+                }
 
 
                 break;
@@ -430,11 +432,11 @@ public class Item extends AppCompatActivity {
             case PICK_FROM_GALLERY_GET:
 //                ImageView1.setBackground(null);
 //                ImageView1.setImageURI(Uri.parse("file://" + outputFileUri));
-                if (data == null){
+                if (data == null) {
                     return;
-                }else{
+                } else {
                     Bundle extras = data.getExtras();
-                    if (extras != null){
+                    if (extras != null) {
                         //获取到裁剪后的图像
                         Bitmap bm = extras.getParcelable("data");
                         ImageView1.setImageBitmap(bm);
@@ -465,12 +467,14 @@ public class Item extends AppCompatActivity {
         imgFileName = s.toString() + ".jpg";
 
     }
+
     /**
      * 将content类型的Uri转化为文件类型的Uri
+     *
      * @param uri
      * @return
      */
-    private Uri convertUri(Uri uri){
+    private Uri convertUri(Uri uri) {
         InputStream is;
         try {
             //Uri ----> InputStream
@@ -479,7 +483,7 @@ public class Item extends AppCompatActivity {
             Bitmap bm = BitmapFactory.decodeStream(is);
             //关闭流
             is.close();
-            return saveBitmap(bm, "CeRefrigerator");
+            return saveBitmap(bm);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             return null;
@@ -491,19 +495,22 @@ public class Item extends AppCompatActivity {
 
     /**
      * 将Bitmap写入SD卡中的一个文件中,并返回写入文件的Uri
+     *
      * @param bm
-     * @param dirPath
      * @return
      */
-    private Uri saveBitmap(Bitmap bm, String dirPath) {
+    private Uri saveBitmap(Bitmap bm) {
         //新建文件夹用于存放裁剪后的图片
-        File tmpDir = new File(Environment.getExternalStorageDirectory() + File.separator + dirPath);
-        if (!tmpDir.exists()){
+        String dirPath = getPicDir();
+        File tmpDir = new File(dirPath);
+        if (!tmpDir.exists()) {
             tmpDir.mkdir();
         }
 
         //新建文件存储裁剪后的图片
-        File img = new File(tmpDir.getAbsolutePath() + File.separator+ imgFileName);
+        File img = new File(dirPath + imgFileName);
+
+        outputFileUri = Uri.fromFile(img);
         try {
             //打开文件输出流
             FileOutputStream fos = new FileOutputStream(img);
@@ -527,9 +534,10 @@ public class Item extends AppCompatActivity {
 
     /**
      * 通过Uri传递图像信息以供裁剪
+     *
      * @param uri
      */
-    private void startImageZoom(Uri uri){
+    private void startImageZoom(Uri uri) {
         //构建隐式Intent来启动裁剪程序
         Intent intent = new Intent("com.android.camera.action.CROP");
         //设置数据uri和类型为图片类型
@@ -544,7 +552,19 @@ public class Item extends AppCompatActivity {
         intent.putExtra("outputY", picWidth);
         //裁剪之后的数据是通过Intent返回
         intent.putExtra("return-data", true);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
         startActivityForResult(intent, PICK_FROM_GALLERY_GET);
+    }
+
+    private void getAndroidVersion() {
+
+        String release = Build.VERSION.RELEASE;
+
+        int intSubStart = release.indexOf(".");
+        android_version = Integer.valueOf(release.substring(0, intSubStart));
+        Log.d("ANDROID_VERSION", "RELEASE =" + release);
+        Log.d("ANDROID_VERSION", "android_version =" + android_version);
+
     }
 }
 

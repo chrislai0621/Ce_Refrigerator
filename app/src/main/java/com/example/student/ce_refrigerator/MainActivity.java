@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
         it = new Intent(this,item2.class);
     }
 
+
     @Override
     protected void onRestart() {
         super.onRestart();
