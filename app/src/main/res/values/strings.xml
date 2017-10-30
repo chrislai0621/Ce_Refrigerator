@@ -11,7 +11,6 @@
     <string name="Freezer">冷凍</string>
     <string name="fridge">冷藏</string>
     <string name="shopping">採購清單</string>
+    <string name="banner_ad_unit_id">ca-app-pub-6939390369089301/6593895063</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

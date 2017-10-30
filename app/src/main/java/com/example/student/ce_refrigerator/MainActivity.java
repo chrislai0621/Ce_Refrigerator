@@ -11,9 +11,10 @@ import com.example.student.ce_refrigerator.Dao.FoodDao;
 import com.example.student.ce_refrigerator.Dao.FoodListDao;
 import com.example.student.ce_refrigerator.EmptyData.food;
 import com.example.student.ce_refrigerator.EmptyData.food_list;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
 import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
     private ListView mListView;
     private FoodListDao foodListDao;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
     private List<food_list> list_foodlist ;
     private MainListAdapter adapter;
     private Intent it ;
+    private AdView mAdView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +33,11 @@ public class MainActivity extends AppCompatActivity {
         initListView();
         getData();
         it = new Intent(this,item2.class);
+        mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
+
     }
 
 
